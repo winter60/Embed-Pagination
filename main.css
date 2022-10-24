@@ -1,0 +1,63 @@
+html,body,div{
+    /* max-height: 50px; */
+    margin: 0;
+    padding: 0;
+    /* border:1px solid red; */
+  }
+    #page_nav {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        position: relative;
+        color:#8ab4f8;
+    }
+
+
+    .page_btn {
+        width: 60px;
+        display: inline-block;
+        text-align: center;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    #page_nav a {
+        color: #8ab4f8;
+        cursor: pointer;
+    }
+
+    #pageNum,
+    /* #pagetotal, */
+    #querycount {
+        width: 50px;
+        height: 30px;
+    }
+
+    #settingBox{
+      width: 100%;
+      /* height: 150px; */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; 
+      /* border:1px solid red; */
+      margin:0;
+      padding:0;
+    }
+    #qrkid{
+      width: 60%;
+    }
+
+    #sql{
+      width: 60%;
+      min-height: 100px;
+      /* margin-top: 30px; */
+      /* max-height: 200px; */
+      /* resize: both; */
+    }
+
+    #settingBox.hide{
+      display: none;
+    }
