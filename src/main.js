@@ -2,7 +2,9 @@ import { getBlockAttrs,setBlockAttrs,updateBlock,sql as querySql} from "./api.js
 
 // 获取挂件id
 function getWidgetId() {
-    return window.frameElement.parentElement.parentElement.getAttribute('data-node-id');
+    var url = new URL(window.location.href);
+    var widgetId = url.searchParams.get('id') || window.frameElement.parentElement.parentElement.getAttribute('data-node-id');
+    return widgetId;
 }
 
 
@@ -43,8 +45,9 @@ function checkSetting(){
 }
 
 async function render(){
-    // 获取挂件属性
-   
+    Pg.widgetId = getWidgetId();
+
+    // 获取挂件属性   
     let res = await getBlockAttrs(Pg.widgetId);
     let pageData = JSON.parse(res["custom-page-data"] || null);
     console.log(pageData);
@@ -144,5 +147,6 @@ function refresh_pagetotal(total) {
 }
 
 let Pg = {};//全局变量
-Pg.widgetId = getWidgetId();
-render();//渲染
+
+// render();//渲染
+setTimeout(render, 0);
