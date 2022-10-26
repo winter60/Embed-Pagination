@@ -79,6 +79,7 @@ async function render(){
     document.querySelector("#next").onclick = next;
     document.querySelector("#querycount").onchange = changeCount;
     document.querySelector("#jumpTo").onclick = jumpTo;
+    document.querySelector("#block_beginning").onclick = jumpToBockBeginning;
 }
 
 // 更新嵌入块的sql
@@ -104,6 +105,7 @@ function refreshEmbeddedBlock(){
         // 更新查询sql
         updateBlock(Pg.pageData.qrkid,"markdown","{{" + sql + "}}").then(()=>{
             updateWidgetAttr();
+            jumpToBockBeginning();//回到块首
         });
     });
     
@@ -144,6 +146,11 @@ function next() {
 }
 function refresh_pagetotal(total) {
     document.querySelector("#pagetotal").innerText = total;
+}
+
+function jumpToBockBeginning(){
+    let block_url = "siyuan://blocks/"+Pg.pageData.qrkid;
+    window.open(block_url);
 }
 
 let Pg = {};//全局变量
