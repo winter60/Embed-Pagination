@@ -7,34 +7,37 @@
 
 <body>
   <div id="page_nav">
-    <a id="block_beginning" class="page_btn">⏫</a>
-    <a id="first" class="page_btn">首页</a>
-    <a id="pre" class="page_btn">上一页</a>
+    <a id="block_beginning" class="page_btn" title="回到嵌入块">⏫</a>
+    <a id="first" class="page_btn" title="首页">🔄️</a>
+
     <input id="pageNum" name="pageNum" value="1" placeholder="第几页" />
     <p>/</p>
     <p id="pagetotal">总页数</p>
-    <a id="jumpTo" class="page_btn">跳转</a>
-    <a id="next" class="page_btn">下一页</a>
-    <p>查询条数
-      <select id="querycount">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5" selected="selected">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="25">25</option>
-        <option value="30">30</option>
-        <option value="50">50</option>
-      </select>
-    </p>
+    <a id="pre" class="page_btn" title="上一页">⬅️</a>
+    <a id="next" class="page_btn" title="下一页">➡️</a>
+    <!-- <a id="jumpTo" class="page_btn"  title="跳转">🆗</a> -->
+    
+    <!-- <p>条数</p> -->
+    <select id="querycount">
+      <option value="0" disabled>每页条数</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5" selected="selected">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="25">25</option>
+      <option value="30">30</option>
+      <option value="50">50</option>
+    </select>
+    
 
-    <p class="page_btn" id="settingBtn">配置</p>
+    <p class="page_btn" id="settingBtn"  title="配置">⏺️</p>
   </div>
   <div id="settingBox" class="hide">
     <input id="qrkid" placeholder="请输入嵌入块id" />

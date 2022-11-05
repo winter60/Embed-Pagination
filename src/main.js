@@ -50,7 +50,6 @@ async function render(){
     // 获取挂件属性   
     let res = await getBlockAttrs(Pg.widgetId);
     let pageData = JSON.parse(res["custom-page-data"] || null);
-    console.log(pageData);
     Pg.pageData = pageData;
 
     // 判断配置是否正常
@@ -78,8 +77,8 @@ async function render(){
     document.querySelector("#pre").onclick = pre;
     document.querySelector("#next").onclick = next;
     document.querySelector("#querycount").onchange = changeCount;
-    document.querySelector("#jumpTo").onclick = jumpTo;
-    document.querySelector("#block_beginning").onclick = jumpToBockBeginning;
+    document.querySelector("#pageNum").onchange = jumpTo;
+    document.querySelector("#block_beginning").onclick = jumpToBlockBeginning;
 }
 
 // 更新嵌入块的sql
@@ -105,7 +104,7 @@ function refreshEmbeddedBlock(){
         // 更新查询sql
         updateBlock(Pg.pageData.qrkid,"markdown","{{" + sql + "}}").then(()=>{
             updateWidgetAttr();
-            jumpToBockBeginning();//回到块首
+            setTimeout(jumpToBlockBeginning,1000);//回到块首
         });
     });
     
@@ -113,8 +112,8 @@ function refreshEmbeddedBlock(){
 
 
 // 更新分页数据到挂件属性
-function updateWidgetAttr(){
-      setBlockAttrs(Pg.widgetId, {"custom-page-data":JSON.stringify(Pg.pageData)}  );
+async function updateWidgetAttr(){
+    await setBlockAttrs(Pg.widgetId, {"custom-page-data":JSON.stringify(Pg.pageData)}  );
 }
 
 
@@ -148,10 +147,45 @@ function refresh_pagetotal(total) {
     document.querySelector("#pagetotal").innerText = total;
 }
 
-function jumpToBockBeginning(){
-    let block_url = "siyuan://blocks/"+Pg.pageData.qrkid;
-    window.open(block_url);
+function jumpToBlockBeginning(){
+    jumpToBlock(Pg.pageData.qrkid);
+    // let block_url = "siyuan://blocks/"+Pg.pageData.qrkid;
+    // window.open(block_url);
+    // window.parent.require('child_process').exec("start "+block_url, null);
 }
+
+// 跳转到块 copy from:siyuan-theme-dark-plus
+function jumpToBlock(id, callback = null) {
+    if (window == top) {
+        // 使用新窗口
+        if (document.referrer){
+            // 不支持浏览器使用新窗口跳转块
+            console.error("跳转块失败！")
+            alert("不支持浏览器使用新窗口跳转块");
+        }else{
+            //使用新窗口打开的（仅用于桌面端）
+            let block_url = "siyuan://blocks/" + id;
+            window.open(block_url);
+        }
+    } else {
+        //未使用新窗口
+        const editor = window.top.document.querySelector('div.protyle-wysiwyg div[data-node-id] div[contenteditable][spellcheck]');
+        if (editor) {
+            let ref = document.createElement("span");
+            ref.setAttribute("data-type", "block-ref");
+            ref.setAttribute("data-subtype", "s");
+            ref.setAttribute("data-id", id);
+            editor.appendChild(ref);
+            ref.click();
+            ref.remove();
+            if (typeof callback === 'function') setTimeout(callback, 100);
+        }
+        else {
+            console.error("跳转块失败！")
+        };
+    }
+}
+
 
 let Pg = {};//全局变量
 
